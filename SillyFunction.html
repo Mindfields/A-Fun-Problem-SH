@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Product Sorter</title>
+	<head>
+	<body>
+		<code id="res"></code>
+		<script>
+			var products = [
+				{ item: '1', brands: 'Nike', type: 'shoe' },
+				{ item: '2', brands: 'Reebok', type: 'shoe' },
+				{ item: '1', brands: 'Nike', type: 'shoe' },
+				{ item: '1', brands: 'Adidas', type: 'shoe' },
+				{ item: '2', brands: 'Adidas', type: 'shoe' },
+				{ item: '1', brands: 'Adidas', type: 'hat' },
+				{ item: '2', brands: 'Adidas', type: 'hat' },
+				{ item: '1', brands: 'Reebok', type: 'shoe' },
+				{ item: '2', brands: 'Nike', type: 'hat' },
+				{ item: '3', brands: 'Reebok', type: 'hat' },
+				{ item: '4', brands: 'Reebok', type: 'hat' }
+				];
+				
+			
+				//sort by primary and secondary values
+			function group_products () {
+					//sort the values from the array
+				function productSort(val) { 
+					return function (obj1,obj2) {
+						return obj1[val] > obj2[val] ? 1
+							: obj1[val] < obj2[val] ? -1 : 0;
+					}
+				}
+				var vals = arguments;
+				return function (obj1, obj2) {
+					var i = 0, result = 0, numberOfProperties = vals.length;
+					while(result === 0 && i < numberOfProperties) {
+						result = productSort(vals[i])(obj1, obj2);
+						i++;
+					}
+					return result;
+				} 
+			}
+			document.getElementById("res").innerText = "Brand Type\n-----\n" + 
+			products.sort(group_products ("brands","type","item")).map(function(val, i) 
+				{return [val["brands"], val["type"]].join(" ")}).join("\n");
+		</script>
+		
+		</body>
+</html>
